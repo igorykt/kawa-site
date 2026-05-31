@@ -1,0 +1,1170 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kawa Contabilidade — Fluidez para o seu negócio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Noto+Serif+JP:wght@300;400;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy:   #050d1f;
+      --deep:   #091428;
+      --mid:    #0d2044;
+      --teal:   #00b4d8;
+      --aqua:   #48cae4;
+      --sky:    #90e0ef;
+      --foam:   #caf0f8;
+      --gold:   #f4c542;
+      --white:  #f8faff;
+      --gray:   #8b9cb6;
+      --text:   #e2e8f4;
+
+      --r-sm: 8px;
+      --r-md: 16px;
+      --r-lg: 24px;
+      --r-xl: 40px;
+
+      --shadow-teal: 0 0 40px rgba(0,180,216,.25);
+      --shadow-card: 0 8px 40px rgba(0,0,0,.4);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--navy);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--deep); }
+    ::-webkit-scrollbar-thumb { background: var(--teal); border-radius: 3px; }
+
+    .kanji { font-family: 'Noto Serif JP', serif; }
+    h1,h2,h3 { line-height: 1.15; }
+    h1 { font-size: clamp(2.4rem, 5vw, 4rem); font-weight: 800; }
+    h2 { font-size: clamp(1.8rem, 3.5vw, 2.8rem); font-weight: 700; }
+    h3 { font-size: 1.25rem; font-weight: 600; }
+    p  { line-height: 1.7; color: var(--gray); }
+
+    .container { max-width: 1160px; margin: 0 auto; padding: 0 24px; }
+    .section    { padding: 96px 0; }
+    .section-sm { padding: 64px 0; }
+    .tag {
+      display: inline-block;
+      font-size: .75rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase;
+      color: var(--teal); background: rgba(0,180,216,.12);
+      padding: 4px 14px; border-radius: 100px;
+      margin-bottom: 16px;
+    }
+    .flex-center { display: flex; align-items: center; justify-content: center; }
+    .text-center { text-align: center; }
+
+    .river-line {
+      display: block; width: 48px; height: 3px;
+      background: linear-gradient(90deg, var(--teal), transparent);
+      border-radius: 2px; margin: 16px 0;
+    }
+    .river-line.center { margin: 16px auto; }
+
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 14px 32px; border-radius: var(--r-xl);
+      font-size: .95rem; font-weight: 600; cursor: pointer;
+      border: none; text-decoration: none; transition: all .25s;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--teal), #0077b6);
+      color: #fff; box-shadow: 0 4px 24px rgba(0,180,216,.35);
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(0,180,216,.5);
+    }
+    .btn-outline {
+      background: transparent; color: var(--teal);
+      border: 1.5px solid var(--teal);
+    }
+    .btn-outline:hover { background: rgba(0,180,216,.1); }
+    .btn-gold {
+      background: linear-gradient(135deg, var(--gold), #e6a800);
+      color: var(--navy); font-weight: 700;
+      box-shadow: 0 4px 24px rgba(244,197,66,.3);
+    }
+    .btn-gold:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(244,197,66,.45); }
+
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 999;
+      padding: 0 24px;
+      transition: background .3s, backdrop-filter .3s;
+    }
+    nav.scrolled {
+      background: rgba(5,13,31,.88);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid rgba(0,180,216,.1);
+    }
+    .nav-inner {
+      max-width: 1160px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 72px;
+    }
+    .logo {
+      display: flex; align-items: center; gap: 10px;
+      text-decoration: none; color: var(--white);
+    }
+    .logo-kanji {
+      font-family: 'Noto Serif JP', serif;
+      font-size: 2rem; font-weight: 700;
+      color: var(--teal);
+      line-height: 1;
+      filter: drop-shadow(0 0 8px rgba(0,180,216,.6));
+    }
+    .logo-name {
+      font-size: 1.4rem; font-weight: 800;
+      letter-spacing: .04em;
+    }
+    .logo-sub {
+      font-size: .65rem; font-weight: 400; letter-spacing: .15em;
+      text-transform: uppercase; color: var(--gray);
+      display: block; margin-top: -2px;
+    }
+    .nav-links {
+      display: flex; align-items: center; gap: 36px;
+      list-style: none;
+    }
+    .nav-links a {
+      color: var(--gray); text-decoration: none; font-size: .9rem; font-weight: 500;
+      transition: color .2s;
+    }
+    .nav-links a:hover { color: var(--white); }
+    .nav-actions { display: flex; align-items: center; gap: 12px; }
+    .btn-nav-login {
+      font-size: .9rem; font-weight: 500; padding: 8px 20px;
+      border-radius: 100px; border: 1.5px solid rgba(255,255,255,.15);
+      color: var(--white); background: transparent; cursor: pointer;
+      text-decoration: none; transition: border-color .2s;
+    }
+    .btn-nav-login:hover { border-color: var(--teal); }
+    .btn-nav-cta { padding: 9px 22px; font-size: .9rem; }
+    .nav-toggle { display: none; background: none; border: none; cursor: pointer; }
+    .nav-toggle span {
+      display: block; width: 24px; height: 2px;
+      background: var(--white); margin: 5px 0; transition: .3s;
+    }
+
+    #hero {
+      min-height: 100vh;
+      display: flex; align-items: center;
+      position: relative; overflow: hidden;
+      padding-top: 72px;
+    }
+    .hero-bg {
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 60% 40%, rgba(0,119,182,.18) 0%, transparent 70%),
+        radial-gradient(ellipse 50% 50% at 10% 80%, rgba(0,180,216,.08) 0%, transparent 60%),
+        linear-gradient(180deg, var(--deep) 0%, var(--navy) 100%);
+    }
+    .river-streams {
+      position: absolute; inset: 0; pointer-events: none; overflow: hidden;
+    }
+    .stream {
+      position: absolute; width: 2px; border-radius: 1px;
+      background: linear-gradient(180deg, transparent, var(--teal), transparent);
+      animation: flow linear infinite;
+      opacity: .18;
+    }
+    .stream:nth-child(1)  { left:  8%; height: 340px; animation-duration: 6s;  animation-delay: 0s; }
+    .stream:nth-child(2)  { left: 11%; height: 200px; animation-duration: 8s;  animation-delay: 1s; }
+    .stream:nth-child(3)  { left: 14%; height: 280px; animation-duration: 7s;  animation-delay: 2s; }
+    .stream:nth-child(4)  { left: 80%; height: 260px; animation-duration: 9s;  animation-delay: .5s; }
+    .stream:nth-child(5)  { left: 83%; height: 180px; animation-duration: 6.5s; animation-delay: 3s; }
+    .stream:nth-child(6)  { left: 86%; height: 300px; animation-duration: 7.5s; animation-delay: 1.5s; }
+    .stream:nth-child(7)  { left: 50%; height: 120px; animation-duration: 11s; animation-delay: 0s; opacity: .08; }
+    @keyframes flow {
+      0%   { top: -350px; opacity: 0; }
+      10%  { opacity: .18; }
+      90%  { opacity: .18; }
+      100% { top: 110vh; opacity: 0; }
+    }
+    .kanji-watermark {
+      position: absolute; right: -2%; top: 50%; transform: translateY(-50%);
+      font-family: 'Noto Serif JP', serif;
+      font-size: clamp(240px, 30vw, 420px); font-weight: 700;
+      color: rgba(0,180,216,.05); line-height: 1;
+      user-select: none; pointer-events: none;
+    }
+    .hero-content {
+      position: relative; z-index: 1;
+      max-width: 640px;
+    }
+    .hero-kana {
+      font-family: 'Noto Serif JP', serif;
+      font-size: .85rem; letter-spacing: .3em; color: var(--teal);
+      margin-bottom: 20px; display: block;
+    }
+    .hero-title { color: var(--white); margin-bottom: 24px; }
+    .hero-title span { color: var(--teal); }
+    .hero-desc { font-size: 1.1rem; margin-bottom: 40px; max-width: 480px; }
+    .hero-actions { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 56px; }
+    .hero-stats {
+      display: flex; gap: 40px; flex-wrap: wrap;
+    }
+    .stat-item { }
+    .stat-num {
+      font-size: 2rem; font-weight: 800; color: var(--white); display: block;
+    }
+    .stat-num span { color: var(--teal); }
+    .stat-lbl { font-size: .8rem; color: var(--gray); letter-spacing: .06em; }
+    .hero-visual {
+      position: absolute; right: 0; top: 50%; transform: translateY(-50%);
+      width: 520px; z-index: 1; pointer-events: none;
+    }
+    .dashboard-card {
+      background: rgba(13,32,68,.75);
+      border: 1px solid rgba(0,180,216,.2);
+      border-radius: var(--r-lg);
+      backdrop-filter: blur(20px);
+      padding: 28px;
+      box-shadow: var(--shadow-card), var(--shadow-teal);
+      animation: float 5s ease-in-out infinite;
+    }
+    @keyframes float {
+      0%,100% { transform: translateY(0); }
+      50%      { transform: translateY(-12px); }
+    }
+    .card-header {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 24px;
+    }
+    .card-badge {
+      font-size: .75rem; font-weight: 600; padding: 4px 12px;
+      background: rgba(0,180,216,.15); color: var(--teal);
+      border-radius: 100px;
+    }
+    .card-dots { display: flex; gap: 6px; }
+    .dot {
+      width: 10px; height: 10px; border-radius: 50%;
+    }
+    .dot-r { background: #ff5f57; }
+    .dot-y { background: #febc2e; }
+    .dot-g { background: #28c840; }
+    .card-label { font-size: .78rem; color: var(--gray); margin-bottom: 4px; }
+    .card-value {
+      font-size: 1.9rem; font-weight: 800; color: var(--white); margin-bottom: 20px;
+    }
+    .card-value small { font-size: 1rem; font-weight: 400; color: var(--gray); }
+    .bar-row {
+      display: grid; grid-template-columns: repeat(7,1fr); gap: 8px;
+      align-items: flex-end; height: 80px; margin-bottom: 12px;
+    }
+    .bar {
+      border-radius: 4px 4px 0 0;
+      background: rgba(0,180,216,.25);
+      transition: height .3s;
+      position: relative;
+    }
+    .bar.active { background: linear-gradient(180deg, var(--teal), #0077b6); }
+    .bar-labels { display: grid; grid-template-columns: repeat(7,1fr); gap: 8px; }
+    .bar-lbl { font-size: .65rem; color: var(--gray); text-align: center; }
+    .card-row {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 10px 0; border-top: 1px solid rgba(255,255,255,.06);
+    }
+    .card-row-icon {
+      width: 32px; height: 32px; border-radius: var(--r-sm);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem; margin-right: 10px;
+    }
+    .card-row-left { display: flex; align-items: center; }
+    .card-row-name { font-size: .85rem; font-weight: 500; color: var(--white); }
+    .card-row-sub  { font-size: .72rem; color: var(--gray); }
+    .card-row-val  { font-size: .9rem; font-weight: 600; }
+    .val-green { color: #4cde8f; }
+    .val-red   { color: #ff6b6b; }
+    .badge-float {
+      position: absolute;
+      background: rgba(13,32,68,.9);
+      border: 1px solid rgba(0,180,216,.25);
+      border-radius: var(--r-md);
+      backdrop-filter: blur(12px);
+      padding: 12px 18px;
+      box-shadow: var(--shadow-card);
+      animation: float 6s ease-in-out infinite;
+    }
+    .badge-float.b1 { left: -60px; top: 30%; animation-delay: 1s; }
+    .badge-float.b2 { right: -20px; bottom: 20%; animation-delay: 2.5s; }
+    .badge-float .bf-label { font-size: .7rem; color: var(--gray); }
+    .badge-float .bf-val   { font-size: 1rem; font-weight: 700; color: var(--white); }
+    .badge-float .bf-tag   { font-size: .7rem; font-weight: 600; color: #4cde8f; }
+
+    #partners {
+      padding: 32px 0;
+      border-top: 1px solid rgba(255,255,255,.06);
+      border-bottom: 1px solid rgba(255,255,255,.06);
+    }
+    .partners-track {
+      display: flex; align-items: center; gap: 64px;
+      overflow: hidden; position: relative;
+    }
+    .partners-inner {
+      display: flex; align-items: center; gap: 64px;
+      animation: scroll-x 25s linear infinite;
+      white-space: nowrap;
+    }
+    @keyframes scroll-x {
+      0%   { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+    .partner-logo {
+      font-size: .85rem; font-weight: 700; color: rgba(255,255,255,.22);
+      letter-spacing: .08em; text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    #para-quem { background: var(--deep); }
+    .section-header { margin-bottom: 56px; }
+    .cards-grid-4 { display: grid; grid-template-columns: repeat(4,1fr); gap: 20px; }
+    .profile-card {
+      background: rgba(0,180,216,.05);
+      border: 1px solid rgba(0,180,216,.12);
+      border-radius: var(--r-md);
+      padding: 32px 24px;
+      transition: all .3s; cursor: pointer;
+      position: relative; overflow: hidden;
+    }
+    .profile-card::before {
+      content: '';
+      position: absolute; bottom: 0; left: 0; right: 0; height: 3px;
+      background: linear-gradient(90deg, transparent, var(--teal), transparent);
+      transform: scaleX(0); transition: transform .3s;
+    }
+    .profile-card:hover { border-color: var(--teal); transform: translateY(-4px); box-shadow: var(--shadow-teal); }
+    .profile-card:hover::before { transform: scaleX(1); }
+    .profile-icon {
+      width: 52px; height: 52px; border-radius: var(--r-sm);
+      background: rgba(0,180,216,.12);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.5rem; margin-bottom: 20px;
+    }
+    .profile-card h3 { color: var(--white); margin-bottom: 8px; }
+    .profile-card p  { font-size: .9rem; }
+    .profile-tag {
+      display: inline-block; margin-top: 16px;
+      font-size: .72rem; font-weight: 700; letter-spacing: .1em;
+      padding: 3px 10px; border-radius: 100px;
+      background: rgba(0,180,216,.12); color: var(--teal);
+    }
+
+    #como-funciona { background: var(--navy); }
+    .steps-row { display: grid; grid-template-columns: repeat(3,1fr); gap: 0; position: relative; }
+    .steps-row::before {
+      content: '';
+      position: absolute; top: 48px; left: calc(16.5% + 24px); right: calc(16.5% + 24px);
+      height: 2px;
+      background: linear-gradient(90deg, var(--teal), rgba(0,180,216,.1));
+    }
+    .step {
+      display: flex; flex-direction: column; align-items: center;
+      text-align: center; padding: 0 24px;
+    }
+    .step-num {
+      width: 96px; height: 96px; border-radius: 50%;
+      border: 2px solid var(--teal);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 2rem; font-weight: 800; color: var(--teal);
+      background: var(--deep); position: relative; z-index: 1;
+      margin-bottom: 28px; box-shadow: 0 0 30px rgba(0,180,216,.2);
+    }
+    .step h3 { color: var(--white); margin-bottom: 12px; }
+
+    #servicos { background: var(--deep); }
+    .services-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .service-card {
+      background: rgba(5,13,31,.6);
+      border: 1px solid rgba(0,180,216,.1);
+      border-radius: var(--r-lg);
+      padding: 36px; transition: all .3s;
+      position: relative; overflow: hidden;
+    }
+    .service-card::after {
+      content: '';
+      position: absolute; top: 0; right: 0;
+      width: 120px; height: 120px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(0,180,216,.06), transparent 70%);
+    }
+    .service-card:hover { border-color: rgba(0,180,216,.3); transform: translateY(-4px); }
+    .service-icon {
+      width: 60px; height: 60px; border-radius: var(--r-md);
+      background: linear-gradient(135deg, rgba(0,180,216,.2), rgba(0,119,182,.1));
+      border: 1px solid rgba(0,180,216,.2);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.6rem; margin-bottom: 24px;
+    }
+    .service-card h3 { color: var(--white); margin-bottom: 12px; }
+    .service-card p  { font-size: .9rem; margin-bottom: 20px; }
+    .service-list { list-style: none; }
+    .service-list li {
+      display: flex; align-items: center; gap: 10px;
+      font-size: .88rem; color: var(--gray); padding: 6px 0;
+    }
+    .service-list li::before {
+      content: ''; display: block;
+      width: 16px; height: 16px; border-radius: 50%;
+      background: rgba(0,180,216,.15);
+      border: 1.5px solid var(--teal);
+      flex-shrink: 0;
+      box-shadow: 0 0 8px rgba(0,180,216,.3);
+    }
+    .service-list li span { color: var(--sky); }
+
+    #planos { background: var(--navy); }
+    .plans-toggle {
+      display: flex; align-items: center; justify-content: center; gap: 16px;
+      margin-bottom: 48px;
+    }
+    .toggle-label { font-size: .9rem; font-weight: 500; color: var(--gray); }
+    .toggle-label.active { color: var(--white); }
+    .toggle-switch {
+      width: 52px; height: 28px; border-radius: 14px;
+      background: var(--teal); position: relative; cursor: pointer; border: none;
+    }
+    .toggle-knob {
+      position: absolute; top: 3px; left: 3px;
+      width: 22px; height: 22px; border-radius: 50%;
+      background: white; transition: transform .3s;
+    }
+    .toggle-switch.annual .toggle-knob { transform: translateX(24px); }
+    .save-badge {
+      background: rgba(244,197,66,.15); color: var(--gold);
+      font-size: .75rem; font-weight: 700; padding: 3px 10px;
+      border-radius: 100px; border: 1px solid rgba(244,197,66,.3);
+    }
+    .plans-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 24px; }
+    .plan-card {
+      background: rgba(13,32,68,.5);
+      border: 1px solid rgba(0,180,216,.1);
+      border-radius: var(--r-lg);
+      padding: 36px; transition: all .3s;
+      position: relative;
+    }
+    .plan-card.featured {
+      background: linear-gradient(160deg, rgba(0,119,182,.25), rgba(0,180,216,.08));
+      border-color: var(--teal);
+      box-shadow: var(--shadow-teal);
+      transform: scale(1.04);
+    }
+    .plan-badge-top {
+      position: absolute; top: -14px; left: 50%; transform: translateX(-50%);
+      background: linear-gradient(90deg, var(--teal), #0077b6);
+      color: #fff; font-size: .78rem; font-weight: 700; padding: 5px 20px;
+      border-radius: 100px; white-space: nowrap;
+    }
+    .plan-name {
+      font-size: .8rem; font-weight: 700; letter-spacing: .15em; text-transform: uppercase;
+      color: var(--teal); margin-bottom: 8px;
+    }
+    .plan-desc { font-size: .88rem; margin-bottom: 28px; }
+    .plan-price { margin-bottom: 28px; }
+    .plan-price .currency { font-size: 1rem; font-weight: 600; color: var(--gray); vertical-align: top; margin-top: 6px; display: inline-block; }
+    .plan-price .amount  { font-size: 3rem; font-weight: 800; color: var(--white); line-height: 1; }
+    .plan-price .period  { font-size: .85rem; color: var(--gray); }
+    .plan-features { list-style: none; margin-bottom: 32px; }
+    .plan-features li {
+      display: flex; align-items: flex-start; gap: 10px;
+      font-size: .88rem; padding: 8px 0;
+      border-bottom: 1px solid rgba(255,255,255,.05);
+    }
+    .check-icon {
+      width: 18px; height: 18px; border-radius: 50%;
+      background: rgba(0,180,216,.2); color: var(--teal);
+      display: flex; align-items: center; justify-content: center;
+      font-size: .65rem; flex-shrink: 0; margin-top: 1px;
+    }
+    .check-icon.off { background: rgba(255,255,255,.06); color: rgba(255,255,255,.2); }
+    .plan-btn { width: 100%; justify-content: center; }
+
+    #depoimentos { background: var(--deep); }
+    .testimonials-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; }
+    .testimonial-card {
+      background: rgba(5,13,31,.7);
+      border: 1px solid rgba(0,180,216,.1);
+      border-radius: var(--r-md);
+      padding: 28px; transition: all .3s;
+    }
+    .testimonial-card:hover { border-color: rgba(0,180,216,.25); }
+    .stars { color: var(--gold); font-size: 1rem; margin-bottom: 16px; letter-spacing: 2px; }
+    .testimonial-text { font-size: .9rem; margin-bottom: 20px; font-style: italic; }
+    .testimonial-author { display: flex; align-items: center; gap: 12px; }
+    .author-avatar {
+      width: 42px; height: 42px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--teal), #0077b6);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem; font-weight: 700; color: white; flex-shrink: 0;
+    }
+    .author-name { font-weight: 600; color: var(--white); font-size: .9rem; }
+    .author-role { font-size: .78rem; color: var(--gray); }
+
+    #numeros { background: var(--navy); }
+    .numbers-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 1px; background: rgba(0,180,216,.1); }
+    .number-item {
+      background: var(--navy);
+      padding: 48px 32px; text-align: center;
+    }
+    .number-item .n {
+      font-size: 3.2rem; font-weight: 800; color: var(--white); display: block; line-height: 1;
+    }
+    .number-item .n span { color: var(--teal); }
+    .number-item .nl { font-size: .85rem; color: var(--gray); margin-top: 8px; display: block; }
+
+    #faq { background: var(--deep); }
+    .faq-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .faq-item {
+      background: rgba(5,13,31,.6);
+      border: 1px solid rgba(0,180,216,.1);
+      border-radius: var(--r-md);
+      overflow: hidden; transition: border-color .25s;
+    }
+    .faq-item.open { border-color: rgba(0,180,216,.3); }
+    .faq-q {
+      padding: 20px 24px;
+      display: flex; align-items: center; justify-content: space-between;
+      cursor: pointer; font-weight: 500; color: var(--white); gap: 16px;
+      user-select: none;
+    }
+    .faq-icon {
+      width: 24px; height: 24px; border-radius: 50%;
+      border: 1.5px solid rgba(0,180,216,.3);
+      display: flex; align-items: center; justify-content: center;
+      font-size: .8rem; flex-shrink: 0; color: var(--teal);
+      transition: transform .3s;
+    }
+    .faq-item.open .faq-icon { transform: rotate(45deg); }
+    .faq-a {
+      padding: 0 24px; max-height: 0; overflow: hidden;
+      font-size: .9rem; transition: max-height .35s, padding .3s;
+    }
+    .faq-item.open .faq-a { max-height: 200px; padding-bottom: 20px; }
+
+    #cta {
+      background: linear-gradient(135deg, rgba(0,119,182,.18), rgba(0,180,216,.08));
+      border-top: 1px solid rgba(0,180,216,.15);
+      border-bottom: 1px solid rgba(0,180,216,.15);
+    }
+    .cta-inner { text-align: center; max-width: 680px; margin: 0 auto; }
+    .cta-inner h2 { color: var(--white); margin-bottom: 16px; }
+    .cta-inner p  { font-size: 1.05rem; margin-bottom: 36px; }
+    .cta-actions { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+    .cta-note { font-size: .8rem; color: var(--gray); margin-top: 20px; }
+
+    footer {
+      background: var(--deep);
+      border-top: 1px solid rgba(0,180,216,.1);
+      padding: 64px 0 32px;
+    }
+    .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px; margin-bottom: 48px; }
+    .footer-brand .logo { margin-bottom: 16px; }
+    .footer-brand p { font-size: .88rem; max-width: 280px; }
+    .footer-brand .socials { display: flex; gap: 12px; margin-top: 24px; }
+    .social-btn {
+      width: 36px; height: 36px; border-radius: var(--r-sm);
+      background: rgba(0,180,216,.1); border: 1px solid rgba(0,180,216,.2);
+      display: flex; align-items: center; justify-content: center;
+      font-size: .9rem; color: var(--gray); cursor: pointer;
+      text-decoration: none; transition: all .2s;
+    }
+    .social-btn:hover { background: rgba(0,180,216,.2); color: var(--teal); }
+    .footer-col h4 {
+      font-size: .85rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+      color: var(--white); margin-bottom: 20px;
+    }
+    .footer-col ul { list-style: none; }
+    .footer-col li { margin-bottom: 10px; }
+    .footer-col a {
+      font-size: .875rem; color: var(--gray); text-decoration: none; transition: color .2s;
+    }
+    .footer-col a:hover { color: var(--teal); }
+    .footer-bottom {
+      display: flex; align-items: center; justify-content: space-between;
+      padding-top: 24px; border-top: 1px solid rgba(255,255,255,.06);
+      flex-wrap: wrap; gap: 16px;
+    }
+    .footer-bottom p { font-size: .8rem; color: var(--gray); }
+    .footer-badges { display: flex; gap: 12px; }
+    .footer-badge {
+      font-size: .7rem; font-weight: 600; padding: 5px 12px;
+      border-radius: 100px; background: rgba(255,255,255,.05);
+      border: 1px solid rgba(255,255,255,.1); color: var(--gray);
+    }
+
+    @media (max-width: 1024px) {
+      .cards-grid-4     { grid-template-columns: repeat(2,1fr); }
+      .services-grid    { grid-template-columns: 1fr; }
+      .plans-grid       { grid-template-columns: 1fr 1fr; }
+      .plan-card.featured { transform: none; }
+      .footer-grid      { grid-template-columns: 1fr 1fr; }
+      .hero-visual      { display: none; }
+    }
+    @media (max-width: 768px) {
+      .nav-links, .nav-actions .btn-nav-login { display: none; }
+      .nav-toggle { display: block; }
+      .cards-grid-4     { grid-template-columns: 1fr; }
+      .steps-row        { grid-template-columns: 1fr; }
+      .steps-row::before { display: none; }
+      .plans-grid       { grid-template-columns: 1fr; }
+      .testimonials-grid{ grid-template-columns: 1fr; }
+      .numbers-grid     { grid-template-columns: repeat(2,1fr); }
+      .faq-grid         { grid-template-columns: 1fr; }
+      .footer-grid      { grid-template-columns: 1fr; }
+      .footer-bottom    { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav id="navbar">
+    <div class="nav-inner">
+      <a href="#" class="logo">
+        <span class="logo-kanji">川</span>
+        <div>
+          <span class="logo-name">Kawa</span>
+          <span class="logo-sub">Contabilidade</span>
+        </div>
+      </a>
+      <ul class="nav-links">
+        <li><a href="#para-quem">Para quem</a></li>
+        <li><a href="#servicos">Serviços</a></li>
+        <li><a href="#planos">Planos</a></li>
+        <li><a href="#faq">FAQ</a></li>
+      </ul>
+      <div class="nav-actions">
+        <a href="#" class="btn-nav-login">Entrar</a>
+        <a href="/cadastro/" class="btn btn-primary btn-nav-cta">Abrir empresa</a>
+      </div>
+      <button class="nav-toggle" onclick="toggleMenu()" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <section id="hero">
+    <div class="hero-bg"></div>
+    <div class="river-streams">
+      <div class="stream"></div><div class="stream"></div><div class="stream"></div>
+      <div class="stream"></div><div class="stream"></div><div class="stream"></div>
+      <div class="stream"></div>
+    </div>
+    <div class="kanji-watermark">川</div>
+
+    <div class="container" style="display:flex; align-items:center; width:100%; position:relative; z-index:1;">
+      <div class="hero-content">
+        <span class="hero-kana">川　かわ　KAWA</span>
+        <h1 class="hero-title">
+          Contabilidade que<br />
+          <span>flui com</span><br />
+          o seu negócio
+        </h1>
+        <p class="hero-desc">
+          Tudo que você precisa para gerir sua empresa com
+          tranquilidade: fiscal, contábil, RH e consultoria —
+          em uma plataforma moderna e sem burocracia.
+        </p>
+        <div class="hero-actions">
+          <a href="/cadastro/" class="btn btn-primary">Abrir minha empresa grátis →</a>
+          <a href="#como-funciona" class="btn btn-outline">Como funciona</a>
+        </div>
+        <div class="hero-stats">
+          <div class="stat-item">
+            <span class="stat-num">R$195</span>
+            <span class="stat-lbl">A partir de /mês</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section id="partners">
+    <div class="container">
+      <div class="partners-track">
+        <div class="partners-inner">
+          <span class="partner-logo">Simples Nacional</span>
+          <span class="partner-logo">Receita Federal</span>
+          <span class="partner-logo">CFC — CRC</span>
+          <span class="partner-logo">MEI Certificado</span>
+          <span class="partner-logo">SPED Contábil</span>
+          <span class="partner-logo">eSocial</span>
+          <span class="partner-logo">NF-e / NFS-e</span>
+          <span class="partner-logo">CNPJ Digital</span>
+          <span class="partner-logo">Simples Nacional</span>
+          <span class="partner-logo">Receita Federal</span>
+          <span class="partner-logo">CFC — CRC</span>
+          <span class="partner-logo">MEI Certificado</span>
+          <span class="partner-logo">SPED Contábil</span>
+          <span class="partner-logo">eSocial</span>
+          <span class="partner-logo">NF-e / NFS-e</span>
+          <span class="partner-logo">CNPJ Digital</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="para-quem">
+    <div class="container">
+      <div class="section-header text-center">
+        <span class="tag">Para quem é</span>
+        <h2 style="color:var(--white);">Independente do tamanho,<br/>Kawa está com você</h2>
+        <span class="river-line center"></span>
+      </div>
+      <div class="cards-grid-4">
+        <div class="profile-card">
+          <div class="profile-icon">🧑‍💼</div>
+          <h3>Autônomo / Freelancer</h3>
+          <p>Quer se formalizar e emitir notas sem complicação? Abra seu MEI em minutos e comece a crescer.</p>
+          <span class="profile-tag">MEI</span>
+        </div>
+        <div class="profile-card">
+          <div class="profile-icon">🚀</div>
+          <h3>Microempresa (ME)</h3>
+          <p>Já cresceu e o MEI ficou pequeno? Fazemos a migração e cuidamos de toda a contabilidade.</p>
+          <span class="profile-tag">Simples Nacional</span>
+        </div>
+        <div class="profile-card">
+          <div class="profile-icon">🏢</div>
+          <h3>Pequena empresa (EPP)</h3>
+          <p>Gestão contábil completa, com suporte a folha de pagamento e planejamento tributário.</p>
+          <span class="profile-tag">Lucro Presumido</span>
+        </div>
+        <div class="profile-card">
+          <div class="profile-icon">🔄</div>
+          <h3>Trocar de contador</h3>
+          <p>Insatisfeito com seu contador atual? Cuidamos de toda a transição sem dor de cabeça.</p>
+          <span class="profile-tag">Migração</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="como-funciona">
+    <div class="container">
+      <div class="section-header text-center">
+        <span class="tag">Como funciona</span>
+        <h2 style="color:var(--white);">Três passos simples,<br/>como o fluxo de um rio</h2>
+        <span class="river-line center"></span>
+      </div>
+      <div class="steps-row">
+        <div class="step">
+          <div class="step-num">01</div>
+          <h3 style="color:var(--white);">Escolha seu plano</h3>
+          <p>Selecione o plano ideal para o porte da sua empresa. Sem letras miúdas, sem surpresas.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">02</div>
+          <h3 style="color:var(--white);">Abrimos sua empresa</h3>
+          <p>Cuidamos de toda a burocracia: CNPJ, alvará, certificado digital e abertura sem custo.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">03</div>
+          <h3 style="color:var(--white);">Gerencie na plataforma</h3>
+          <p>Acesse seu painel 24h: emita notas, veja guias, converse com seu contador e muito mais.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="servicos">
+    <div class="container">
+      <div class="section-header text-center">
+        <span class="tag">Nossos serviços</span>
+        <h2 style="color:var(--white);">Tudo que sua empresa<br/>precisa em um só lugar</h2>
+        <span class="river-line center"></span>
+      </div>
+      <div class="services-grid">
+        <div class="service-card">
+          <div class="service-icon">📊</div>
+          <h3 style="color:var(--white);">Contabilidade & Fiscal</h3>
+          <p>Escrituração contábil completa, apuração de impostos e entrega de obrigações acessórias no prazo.</p>
+          <ul class="service-list">
+            <li><span>Apuração de Simples Nacional, Lucro Presumido e Lucro Real</span></li>
+            <li><span>Emissão e controle de notas fiscais (NF-e, NFS-e)</span></li>
+            <li><span>SPED Contábil, ECD e ECF</span></li>
+            <li><span>Declarações: IRPJ, CSLL, DCTF, GIA</span></li>
+          </ul>
+        </div>
+        <div class="service-card">
+          <div class="service-icon">👥</div>
+          <h3 style="color:var(--white);">RH & Folha de Pagamento</h3>
+          <p>Gestão completa de pessoal: admissão, demissão, FGTS, férias e toda a rotina do eSocial.</p>
+          <ul class="service-list">
+            <li><span>Elaboração de folha de pagamento mensal</span></li>
+            <li><span>Admissão e demissão de colaboradores</span></li>
+            <li><span>Gestão de férias e 13º salário</span></li>
+            <li><span>eSocial, CAGED, RAIS e mais</span></li>
+          </ul>
+        </div>
+        <div class="service-card">
+          <div class="service-icon">🏛️</div>
+          <h3 style="color:var(--white);">Abertura & Alteração de Empresa</h3>
+          <p>Do zero ao CNPJ ativo: abertura gratuita nos planos anuais, com suporte total ao processo.</p>
+          <ul class="service-list">
+            <li><span>Abertura de MEI, ME e EPP</span></li>
+            <li><span>Emissão de alvará e licenças</span></li>
+            <li><span>Certificado digital A1 incluído</span></li>
+            <li><span>Migração MEI → ME sem custos ocultos</span></li>
+          </ul>
+        </div>
+        <div class="service-card">
+          <div class="service-icon">💡</div>
+          <h3 style="color:var(--white);">Consultoria & Planejamento</h3>
+          <p>Um contador dedicado para orientar decisões estratégicas e reduzir legalmente a sua carga tributária.</p>
+          <ul class="service-list">
+            <li><span>Planejamento tributário personalizado</span></li>
+            <li><span>Consultoria para enquadramento societário</span></li>
+            <li><span>Suporte via chat, e-mail e videoconferência</span></li>
+            <li><span>Relatórios gerenciais mensais</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="planos">
+    <div class="container">
+      <div class="section-header text-center">
+        <span class="tag">Planos e preços</span>
+        <h2 style="color:var(--white);">Transparente como<br/>a água de um rio limpo</h2>
+        <span class="river-line center"></span>
+      </div>
+
+      <div class="plans-toggle">
+        <span class="toggle-label active" id="lbl-mensal">Mensal</span>
+        <button class="toggle-switch" id="planToggle" onclick="togglePlan()">
+          <div class="toggle-knob" id="toggleKnob"></div>
+        </button>
+        <span class="toggle-label" id="lbl-anual">Anual</span>
+        <span class="save-badge">Economize 20%</span>
+      </div>
+
+      <div class="plans-grid">
+        <div class="plan-card">
+          <div class="plan-name">MEI</div>
+          <p class="plan-desc">Para quem está começando e precisa de formalização simples e rápida.</p>
+          <div class="plan-price">
+            <span class="currency">R$</span>
+            <span class="amount" data-mensal="69" data-anual="55">69</span>
+            <span class="period">/mês</span>
+          </div>
+          <ul class="plan-features">
+            <li><div class="check-icon">✓</div>Abertura de MEI</li>
+            <li><div class="check-icon">✓</div>Declaração anual DASN</li>
+            <li><div class="check-icon">✓</div>Emissão de DAS mensal</li>
+            <li><div class="check-icon">✓</div>Suporte via chat</li>
+            <li><div class="check-icon">✓</div>Emissão de notas fiscais</li>
+            <li><div class="check-icon off">✗</div><span style="color:var(--gray)">Folha de pagamento</span></li>
+            <li><div class="check-icon off">✗</div><span style="color:var(--gray)">Consultoria tributária</span></li>
+          </ul>
+          <a href="/cadastro/?plan=MEI" class="btn btn-outline plan-btn">Escolher MEI</a>
+        </div>
+
+        <div class="plan-card featured">
+          <div class="plan-badge-top">✦ Mais popular</div>
+          <div class="plan-name">Essencial</div>
+          <p class="plan-desc">Para microempresas no Simples Nacional que precisam de contabilidade completa.</p>
+          <div class="plan-price">
+            <span class="currency">R$</span>
+            <span class="amount" data-mensal="195" data-anual="156">195</span>
+            <span class="period">/mês</span>
+          </div>
+          <ul class="plan-features">
+            <li><div class="check-icon">✓</div>Abertura de empresa grátis</li>
+            <li><div class="check-icon">✓</div>Escrituração contábil completa</li>
+            <li><div class="check-icon">✓</div>Apuração de impostos</li>
+            <li><div class="check-icon">✓</div>Notas fiscais ilimitadas</li>
+            <li><div class="check-icon">✓</div>Suporte com contador dedicado</li>
+            <li><div class="check-icon">✓</div>Folha (até 3 colaboradores)</li>
+            <li><div class="check-icon off">✗</div><span style="color:var(--gray)">Planejamento tributário avançado</span></li>
+          </ul>
+          <a href="/cadastro/?plan=Essencial" class="btn btn-primary plan-btn">Começar agora →</a>
+        </div>
+
+        <div class="plan-card">
+          <div class="plan-name">Profissional</div>
+          <p class="plan-desc">Para empresas em crescimento que precisam de suporte total e planejamento estratégico.</p>
+          <div class="plan-price">
+            <span class="currency">R$</span>
+            <span class="amount" data-mensal="390" data-anual="312">390</span>
+            <span class="period">/mês</span>
+          </div>
+          <ul class="plan-features">
+            <li><div class="check-icon">✓</div>Tudo do Essencial</li>
+            <li><div class="check-icon">✓</div>Lucro Presumido / Lucro Real</li>
+            <li><div class="check-icon">✓</div>Folha ilimitada de colaboradores</li>
+            <li><div class="check-icon">✓</div>Planejamento tributário</li>
+            <li><div class="check-icon">✓</div>Relatórios gerenciais mensais</li>
+            <li><div class="check-icon">✓</div>Consultoria por vídeo</li>
+            <li><div class="check-icon">✓</div>Contador responsável exclusivo</li>
+          </ul>
+          <a href="/cadastro/?plan=Profissional" class="btn btn-gold plan-btn">Escolher Profissional</a>
+        </div>
+      </div>
+
+      <p style="text-align:center; margin-top:28px; font-size:.85rem; color:var(--gray);">
+        Precisa de algo personalizado?
+        <a href="#" style="color:var(--teal); text-decoration:none; font-weight:600;">Fale com nosso time →</a>
+      </p>
+    </div>
+  </section>
+
+
+
+  <section class="section" id="faq">
+    <div class="container">
+      <div class="section-header text-center">
+        <span class="tag">Perguntas frequentes</span>
+        <h2 style="color:var(--white);">Ainda tem dúvidas?<br/>Respondemos tudo</h2>
+        <span class="river-line center"></span>
+      </div>
+      <div class="faq-grid" id="faqGrid">
+
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this)">
+            A abertura da empresa é realmente gratuita?
+            <div class="faq-icon">+</div>
+          </div>
+          <div class="faq-a">
+            <p>Sim! Nos planos anuais Essencial e Profissional, a Kawa cobre todos os custos de abertura de empresa, incluindo taxas governamentais, emissão de certificado digital e documentação. Você não paga nada para abrir.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this)">
+            Posso migrar de contador para a Kawa?
+            <div class="faq-icon">+</div>
+          </div>
+          <div class="faq-a">
+            <p>Claro! Nossa equipe gerencia toda a transição: solicitamos a documentação ao contador anterior, fazemos o levantamento do histórico contábil e assumimos sua empresa sem qualquer interrupção nos serviços.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this)">
+            Tenho um contador dedicado ou é atendimento genérico?
+            <div class="faq-icon">+</div>
+          </div>
+          <div class="faq-a">
+            <p>Nos planos Essencial e Profissional, você tem um contador dedicado à sua empresa, que conhece sua realidade e pode ser acionado via chat, e-mail ou vídeo conforme seu plano.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this)">
+            Qual o prazo para abertura do CNPJ?
+            <div class="faq-icon">+</div>
+          </div>
+          <div class="faq-a">
+            <p>Em média 3 a 7 dias úteis para abertura completa (CNPJ + alvará), dependendo do município e do tipo de atividade. Algumas empresas ficam prontas em até 24 horas.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this)">
+            A plataforma emite notas fiscais de qualquer tipo?
+            <div class="faq-icon">+</div>
+          </div>
+          <div class="faq-a">
+            <p>Sim. A plataforma Kawa suporta emissão de NF-e (produto), NFS-e (serviço) e NFC-e (consumidor final), integrada direto com a prefeitura e Receita Federal.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this)">
+            Posso cancelar quando quiser?
+            <div class="faq-icon">+</div>
+          </div>
+          <div class="faq-a">
+            <p>No plano mensal, você pode cancelar a qualquer momento sem multa. No plano anual, há fidelidade de 12 meses, mas oferecemos garantia de satisfação de 30 dias na contratação.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this)">
+            A Kawa atende em todo o Brasil?
+            <div class="faq-icon">+</div>
+          </div>
+          <div class="faq-a">
+            <p>Sim, atendemos empresas em todos os estados brasileiros. Somos 100% digital, então não importa onde você esteja — tudo é resolvido pela plataforma e sem precisar sair de casa.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this)">
+            O que está incluso no certificado digital?
+            <div class="faq-icon">+</div>
+          </div>
+          <div class="faq-a">
+            <p>Nos planos anuais, incluímos o certificado digital A1 (validade 1 ano), necessário para assinar documentos, emitir notas e acessar sistemas do governo. Renovação com desconto para clientes.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="cta">
+    <div class="container">
+      <div class="cta-inner">
+        <span class="tag">Comece hoje</span>
+        <h2 style="color:var(--white);">Deixe a burocracia fluir<br/>— e foque no que importa</h2>
+        <p>Abra sua empresa, ou traga a sua contabilidade para a Kawa. Rápido, digital e sem surpresas no bolso.</p>
+        <div class="cta-actions">
+          <a href="/cadastro/" class="btn btn-primary">Abrir minha empresa grátis →</a>
+          <a href="#" class="btn btn-outline">Falar com um contador</a>
+        </div>
+        <p class="cta-note">Sem fidelidade no plano mensal · Cancelamento a qualquer hora</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="#" class="logo" style="margin-bottom:16px; display:inline-flex;">
+            <span class="logo-kanji" style="font-size:1.8rem;">川</span>
+            <div>
+              <span class="logo-name" style="font-size:1.2rem;">Kawa</span>
+              <span class="logo-sub">Contabilidade</span>
+            </div>
+          </a>
+          <p>Contabilidade digital para quem quer crescer com tranquilidade. Moderno, transparente e acessível.</p>
+          <div class="socials">
+            <a href="#" class="social-btn" aria-label="Instagram">in</a>
+            <a href="#" class="social-btn" aria-label="LinkedIn">li</a>
+            <a href="#" class="social-btn" aria-label="YouTube">yt</a>
+            <a href="#" class="social-btn" aria-label="WhatsApp">wp</a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h4>Serviços</h4>
+          <ul>
+            <li><a href="#">Abertura de empresa</a></li>
+            <li><a href="#">Contabilidade</a></li>
+            <li><a href="#">Folha de pagamento</a></li>
+            <li><a href="#">Notas fiscais</a></li>
+            <li><a href="#">Consultoria tributária</a></li>
+            <li><a href="#">Migração de contador</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Empresa</h4>
+          <ul>
+            <li><a href="#">Sobre a Kawa</a></li>
+            <li><a href="#">Blog</a></li>
+            <li><a href="#">Carreiras</a></li>
+            <li><a href="#">Imprensa</a></li>
+            <li><a href="#">Parceiros</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Suporte</h4>
+          <ul>
+            <li><a href="#">Central de ajuda</a></li>
+            <li><a href="#">Fale conosco</a></li>
+            <li><a href="#">Política de privacidade</a></li>
+            <li><a href="#">Termos de uso</a></li>
+            <li><a href="#">LGPD</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>© 2026 Kawa Contabilidade</p>
+        <div class="footer-badges">
+          <span class="footer-badge">CFC Registrado</span>
+          <span class="footer-badge">SSL Seguro</span>
+          <span class="footer-badge">LGPD Conforme</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 40);
+    });
+
+    function toggleMenu() {
+      const links = document.querySelector('.nav-links');
+      links.style.display = links.style.display === 'flex' ? 'none' : 'flex';
+      links.style.flexDirection = 'column';
+      links.style.position = 'absolute';
+      links.style.top = '72px';
+      links.style.left = '0';
+      links.style.right = '0';
+      links.style.background = 'rgba(5,13,31,.97)';
+      links.style.padding = '24px';
+      links.style.borderBottom = '1px solid rgba(0,180,216,.15)';
+      links.style.gap = '24px';
+    }
+
+    const bars = [55, 42, 68, 50, 73, 61, 85];
+    const chartEl = document.getElementById('heroChart');
+    if (chartEl) {
+      bars.forEach((h, i) => {
+        const bar = document.createElement('div');
+        bar.className = 'bar' + (i === bars.length - 1 ? ' active' : '');
+        bar.style.height = h + '%';
+        chartEl.appendChild(bar);
+      });
+    }
+
+    let isAnnual = false;
+    function togglePlan() {
+      isAnnual = !isAnnual;
+      const toggle = document.getElementById('planToggle');
+      const lblM   = document.getElementById('lbl-mensal');
+      const lblA   = document.getElementById('lbl-anual');
+
+      toggle.classList.toggle('annual', isAnnual);
+      lblM.classList.toggle('active', !isAnnual);
+      lblA.classList.toggle('active', isAnnual);
+
+      document.querySelectorAll('.amount').forEach(el => {
+        const val = isAnnual ? el.dataset.anual : el.dataset.mensal;
+        el.textContent = val;
+      });
+    }
+
+    function toggleFaq(btn) {
+      const item = btn.parentElement;
+      const isOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+      if (!isOpen) item.classList.add('open');
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.style.opacity = '1';
+          e.target.style.transform = 'translateY(0)';
+        }
+      });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll(
+      '.profile-card, .service-card, .plan-card, .step, .testimonial-card, .faq-item, .number-item'
+    ).forEach(el => {
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(28px)';
+      el.style.transition = 'opacity .55s ease, transform .55s ease';
+      observer.observe(el);
+    });
+
+  </script>
+</body>
+</html>
