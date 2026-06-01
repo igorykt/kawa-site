@@ -849,67 +849,8 @@
         <span class="save-badge">Economize 20%</span>
       </div>
 
-      <div class="plans-grid">
-        <div class="plan-card">
-          <div class="plan-name">MEI</div>
-          <p class="plan-desc">Para quem está começando e precisa de formalização simples e rápida.</p>
-          <div class="plan-price">
-            <span class="currency">R$</span>
-            <span class="amount" data-mensal="69" data-anual="55">69</span>
-            <span class="period">/mês</span>
-          </div>
-          <ul class="plan-features">
-            <li><div class="check-icon">✓</div>Abertura de MEI</li>
-            <li><div class="check-icon">✓</div>Declaração anual DASN</li>
-            <li><div class="check-icon">✓</div>Emissão de DAS mensal</li>
-            <li><div class="check-icon">✓</div>Suporte via chat</li>
-            <li><div class="check-icon">✓</div>Emissão de notas fiscais</li>
-            <li><div class="check-icon off">✗</div><span style="color:var(--gray)">Folha de pagamento</span></li>
-            <li><div class="check-icon off">✗</div><span style="color:var(--gray)">Consultoria tributária</span></li>
-          </ul>
-          <a href="http://localhost:3000/cadastro/?plan=MEI" class="btn btn-outline plan-btn">Escolher MEI</a>
-        </div>
-
-        <div class="plan-card featured">
-          <div class="plan-badge-top">✦ Mais popular</div>
-          <div class="plan-name">Essencial</div>
-          <p class="plan-desc">Para microempresas no Simples Nacional que precisam de contabilidade completa.</p>
-          <div class="plan-price">
-            <span class="currency">R$</span>
-            <span class="amount" data-mensal="195" data-anual="156">195</span>
-            <span class="period">/mês</span>
-          </div>
-          <ul class="plan-features">
-            <li><div class="check-icon">✓</div>Abertura de empresa incluída</li>
-            <li><div class="check-icon">✓</div>Escrituração contábil completa</li>
-            <li><div class="check-icon">✓</div>Apuração de impostos</li>
-            <li><div class="check-icon">✓</div>Notas fiscais ilimitadas</li>
-            <li><div class="check-icon">✓</div>Suporte com contador dedicado</li>
-            <li><div class="check-icon">✓</div>Folha (até 3 colaboradores)</li>
-            <li><div class="check-icon off">✗</div><span style="color:var(--gray)">Planejamento tributário avançado</span></li>
-          </ul>
-          <a href="http://localhost:3000/cadastro/?plan=Essencial" class="btn btn-primary plan-btn">Começar agora →</a>
-        </div>
-
-        <div class="plan-card">
-          <div class="plan-name">Profissional</div>
-          <p class="plan-desc">Para empresas em crescimento que precisam de suporte total e planejamento estratégico.</p>
-          <div class="plan-price">
-            <span class="currency">R$</span>
-            <span class="amount" data-mensal="390" data-anual="312">390</span>
-            <span class="period">/mês</span>
-          </div>
-          <ul class="plan-features">
-            <li><div class="check-icon">✓</div>Tudo do Essencial</li>
-            <li><div class="check-icon">✓</div>Lucro Presumido / Lucro Real</li>
-            <li><div class="check-icon">✓</div>Folha ilimitada de colaboradores</li>
-            <li><div class="check-icon">✓</div>Planejamento tributário</li>
-            <li><div class="check-icon">✓</div>Relatórios gerenciais mensais</li>
-            <li><div class="check-icon">✓</div>Consultoria por vídeo</li>
-            <li><div class="check-icon">✓</div>Contador responsável exclusivo</li>
-          </ul>
-          <a href="http://localhost:3000/cadastro/?plan=Profissional" class="btn btn-gold plan-btn">Escolher Profissional</a>
-        </div>
+      <div class="plans-grid" id="plansGrid">
+        <p style="text-align:center;color:var(--gray);grid-column:1/-1;padding:40px 0;">Carregando planos...</p>
       </div>
 
       <p style="text-align:center; margin-top:28px; font-size:.85rem; color:var(--gray);">
@@ -1146,14 +1087,69 @@
       });
     }, { threshold: 0.12 });
 
-    document.querySelectorAll(
-      '.profile-card, .service-card, .plan-card, .step, .testimonial-card, .faq-item, .number-item'
-    ).forEach(el => {
-      el.style.opacity = '0';
-      el.style.transform = 'translateY(28px)';
-      el.style.transition = 'opacity .55s ease, transform .55s ease';
-      observer.observe(el);
-    });
+    function observeAnimated(scope) {
+      (scope || document).querySelectorAll(
+        '.profile-card, .service-card, .plan-card, .step, .testimonial-card, .faq-item, .number-item'
+      ).forEach(el => {
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(28px)';
+        el.style.transition = 'opacity .55s ease, transform .55s ease';
+        observer.observe(el);
+      });
+    }
+
+    observeAnimated();
+
+    const CADASTRO_BASE = 'http://localhost:3000';
+    const API_BASE = 'http://localhost:5000';
+
+    async function loadPlans() {
+      const grid = document.getElementById('plansGrid');
+      try {
+        const res = await fetch(`${API_BASE}/api/plans?activeOnly=true`);
+        if (!res.ok) throw new Error('API error');
+        const plans = await res.json();
+        plans.sort((a, b) => a.displayOrder - b.displayOrder);
+
+        const midIdx = Math.floor((plans.length - 1) / 2);
+        const BTN_STYLES = ['btn-outline', 'btn-primary', 'btn-gold'];
+
+        grid.innerHTML = plans.map((plan, i) => {
+          const isFeatured = plans.length > 1 && i === midIdx;
+          const btnClass = BTN_STYLES[Math.min(i, BTN_STYLES.length - 1)];
+          const annualPrice = Math.round(plan.price * 0.8);
+          const displayPrice = isAnnual ? annualPrice : plan.price;
+
+          const featureItems = [
+            ...plan.pros.map(p => `<li><div class="check-icon">✓</div>${p}</li>`),
+            ...plan.cons.map(c => `<li><div class="check-icon off">✗</div><span style="color:var(--gray)">${c}</span></li>`)
+          ].join('');
+
+          const btnText = isFeatured ? 'Começar agora →' : `Escolher ${plan.name}`;
+
+          return `
+            <div class="plan-card${isFeatured ? ' featured' : ''}">
+              ${isFeatured ? '<div class="plan-badge-top">✦ Mais popular</div>' : ''}
+              <div class="plan-name">${plan.name}</div>
+              <p class="plan-desc">${plan.forWhom}</p>
+              <div class="plan-price">
+                <span class="currency">R$</span>
+                <span class="amount" data-mensal="${plan.price}" data-anual="${annualPrice}">${displayPrice}</span>
+                <span class="period">/mês</span>
+              </div>
+              <ul class="plan-features">${featureItems}</ul>
+              <a href="${CADASTRO_BASE}/cadastro/?plan=${encodeURIComponent(plan.name)}" class="btn ${btnClass} plan-btn">${btnText}</a>
+            </div>
+          `;
+        }).join('');
+
+        observeAnimated(grid);
+      } catch {
+        grid.innerHTML = '<p style="text-align:center;color:var(--gray);grid-column:1/-1;padding:40px 0;">Não foi possível carregar os planos. Tente novamente em instantes.</p>';
+      }
+    }
+
+    loadPlans();
 
   </script>
 </body>
